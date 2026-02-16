@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Formulario con AutoGuardado</title>
+
+<style>
+    body{
+        font-family: Arial, sans-serif;
+        background: linear-gradient(120deg, #74ebd5, #ACB6E5);
+        height: 100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        margin:0;
+    }
+
+    .contenedor{
+        background:white;
+        padding:30px;
+        border-radius:12px;
+        box-shadow:0 10px 25px rgba(0,0,0,0.2);
+        width:350px;
+    }
+
+    h2{
+        text-align:center;
+        margin-bottom:20px;
+    }
+
+    label{
+        display:block;
+        margin-top:10px;
+        font-weight:bold;
+    }
+
+    input{
+        width:100%;
+        padding:8px;
+        margin-top:5px;
+        border-radius:6px;
+        border:1px solid #ccc;
+    }
+
+    button{
+        margin-top:20px;
+        width:100%;
+        padding:10px;
+        border:none;
+        border-radius:8px;
+        background:#4CAF50;
+        color:white;
+        font-size:16px;
+        cursor:pointer;
+    }
+
+    button:hover{
+        background:#45a049;
+    }
+
+    .status{
+        text-align:center;
+        font-size:12px;
+        color:green;
+        margin-top:10px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="contenedor">
+<h2>Registro</h2>
+
+<form id="formulario">
+    <label>Nombre</label>
+    <input type="text" id="nombre">
+
+    <label>Email</label>
+    <input type="email" id="email">
+
+    <label>Teléfono</label>
+    <input type="text" id="telefono">
+
+    <label>Dirección</label>
+    <input type="text" id="direccion">
+
+    <label>Ciudad</label>
+    <input type="text" id="ciudad">
+
+    <label>Comentario</label>
+    <input type="text" id="comentario">
+
+    <button type="button" onclick="limpiar()">Limpiar datos guardados</button>
+
+    <div class="status" id="status"></div>
+</form>
+</div>
+
+<script>
+const campos = [
+    "nombre",
+    "email",
+    "telefono",
+    "direccion",
+    "ciudad",
+    "comentario"
+];
+
+// Restaurar datos
+window.onload = () => {
+    campos.forEach(id => {
+        const valor = localStorage.getItem(id);
+        if(valor){
+            document.getElementById(id).value = valor;
+        }
+    });
+};
+
+// Guardado automático
+campos.forEach(id => {
+    document.getElementById(id).addEventListener("input", (e)=>{
+        localStorage.setItem(id, e.target.value);
+        document.getElementById("status").innerText = "Guardado automáticamente ✔";
+    });
+});
+
+// Limpiar almacenamiento
+function limpiar(){
+    campos.forEach(id => localStorage.removeItem(id));
+    location.reload();
+}
+</script>
+
+</body>
+</html>
